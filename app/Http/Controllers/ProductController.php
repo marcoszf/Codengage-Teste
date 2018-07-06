@@ -3,24 +3,30 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Entities\Product;
+use \Doctrine\ORM\EntityManagerInterface;
+use Carbon\Carbon;
 
 class ProductController extends Controller
 {
 
-    public function index()
+    public function index(EntityManagerInterface $em)
     {
+        $products = $em->getRepository(Product::class)->findAll();
 
-        return view('app.product.main-product');
-    }
-
-    public function create()
-    {
-
+        return view('app.product.main-product', [
+            'products' => $products
+        ]);
     }
 
     public function store(Request $request)
     {
+        $product = new Product(3, $request->code, $request->name, $request->price);
 
+        \EntityManager::persist($product);
+        \EntityManager::flush();
+
+        return '1';
     }
 
     public function show($id)
@@ -38,8 +44,12 @@ class ProductController extends Controller
 
     }
 
-    public function destroy($id)
-    {
+    public function delete(EntityManagerInterface $em, $id){
+        $product = $em->getRepository(Product::class)->find($id);
 
+        $em->remove($product);
+        $em->flush();
+
+        return redirect('product')->with('success_message', 'Registro removido com sucesso.');
     }
 }
