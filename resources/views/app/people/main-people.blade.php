@@ -1,5 +1,7 @@
 @extends('app.master')
 
+@section('title', 'Pessoas')
+
 @section('content')
 
 
@@ -43,8 +45,10 @@
                         <td>{{ $person->getName() }}</td>
                         <td>123</td>
                         <td>
-                            <a href="{{ url('people-delete/' . $person->getId()) }}" class="btn btn-danger">Deletar</a>
-                            <a href="{{ url('people-edit/' . $person->getId()) }}" class="btn btn-default">Editar</a>
+                            {!! Form::open(['url' => 'people/' . $person->getId(), 'method' => 'delete']) !!}
+                                <input type="submit" value="Deletar" class="btn btn-danger">
+                            {!! Form::close() !!}
+                            <a href="{{ url('people/' . $person->getId() . '/edit') }}" class="btn btn-default">Editar</a>
                         </td>
                     </tr>
                 @empty

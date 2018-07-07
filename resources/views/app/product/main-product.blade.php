@@ -1,5 +1,7 @@
 @extends('app.master')
 
+@section('title', 'Produtos')
+
 @section('content')
 
     <div class="row">
@@ -23,7 +25,6 @@
                 {{ Form::label('price', 'Preço:') }}
                 <input type="text" class="form-control" name="price" required>
             </div>
-
             <br>
 
             <div class="col-12">
@@ -51,8 +52,11 @@
                         <td>{{ $product->getCode() }}</td>
                         <td>{{ $product->getPrice() }}</td>
                         <td>
-                            <a href="{{ url('product-delete/' . $product->getId()) }}" class="btn btn-danger">Deletar</a>
-                            <a href="{{ url('product-edit/' . $product->getId()) }}" class="btn btn-default">Editar</a>
+                            {!! Form::open(['url' => 'product/' . $product->getId(), 'method' => 'delete']) !!}
+                            <input type="submit" value="Deletar" class="btn btn-danger">
+                            {!! Form::close() !!}
+
+                            <a href="{{ url('product/' . $product->getId() . '/edit') }}" class="btn btn-default">Editar</a>
                         </td>
                     </tr>
                 @empty

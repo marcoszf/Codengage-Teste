@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
-    <title>Codengage Teste</title>
+    <title>@yield('title') :: Codengage Teste</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width,initial-scale=1">
 
@@ -20,6 +20,13 @@
 </head>
 
 <body>
+
+    @if(session('success_message'))
+        <div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            {{ session('success_message') }}
+        </div>
+    @endif
 
     <div class="conteiner">
         <div class="center">
