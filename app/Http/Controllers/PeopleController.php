@@ -20,7 +20,7 @@ class PeopleController extends Controller
 
     public function store(Request $request)
     {
-        $task = new People(5, $request->name, Carbon::createFromDate('1987', '08', '19' ));
+        $task = new People(1, $request->name, Carbon::createFromDate('1987', '08', '19' ));
 
         \EntityManager::persist($task);
         \EntityManager::flush();

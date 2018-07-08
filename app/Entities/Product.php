@@ -11,23 +11,34 @@ use Doctrine\Common\Collections\ArrayCollection;
 class Product
 {
     /**
+     * @var \Ramsey\Uuid\UuidInterface
+     *
      * @ORM\Id
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", unique=true)
+     * @ORM\GeneratedValue(strategy="CUSTOM")
+     * @ORM\CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidGenerator")
      */
     protected $id;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", unique=true)
      */
     protected $code;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", unique=true)
      */
     protected $name;
 
+
     /**
-     * @ORM\Column(type="decimal")
+     * @ORM\OneToMany(targetEntity="ItemOrder", mappedBy="itemOrder", cascade={"persist"})
+     * @var ArrayCollection|ItemOrder[]
+     */
+    protected $itemsOrder;
+
+    /**
+     * @ORM\Column(type="decimal", precision=2, options={"unsigned":true})
      */
     protected $price;
 
@@ -37,6 +48,8 @@ class Product
         $this->code      = $code;
         $this->name      = $name;
         $this->price     = $price;
+
+        $this->itemsOrder = new ArrayCollection;
     }
 
     public function getId()
@@ -77,5 +90,18 @@ class Product
     public function setPrice($price)
     {
         $this->price = $price;
+    }
+
+    public function addItemOrder(ItemOrder $itemsOrder)
+    {
+        if(!$this->itemsOrders->contains($itemsOrder)) {
+            $itemsOrder->setItemOrder($this);
+            $this->itemsOrders->add($itemsOrder);
+        }
+    }
+
+    public function getItemOrder()
+    {
+        return $this->itemsOrders;
     }
 }
