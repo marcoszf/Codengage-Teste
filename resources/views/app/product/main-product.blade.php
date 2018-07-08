@@ -50,7 +50,7 @@
                         <td>{{ $product->getId() }}</td>
                         <td>{{ $product->getName() }}</td>
                         <td>{{ $product->getCode() }}</td>
-                        <td>{{ $product->getPrice() }}</td>
+                        <td>R$ {{ number_format($product->getPrice(), 2, ',', '.')  }}</td>
                         <td>
                             {!! Form::open(['url' => 'product/' . $product->getId(), 'method' => 'delete']) !!}
                             <input type="submit" value="Deletar" class="btn btn-danger">

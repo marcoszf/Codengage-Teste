@@ -3,12 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Entities\SellOrder;
+use \Doctrine\ORM\EntityManagerInterface;
+use Carbon\Carbon;
 
 class OrderController extends Controller
 {
-    public function index()
+    public function index(EntityManagerInterface $em)
     {
-        return view('app.order.main-order');
+        $sellOrders = $em->getRepository(SellOrder::class)->findAll();
+
+        return view('app.order.main-order', [
+            'sellOrders' => $sellOrders
+        ]);
     }
 
     public function create()

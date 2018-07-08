@@ -6,4 +6,5 @@ Route::get('/', function () {
 
 Route::resource('people', 'PeopleController');
 Route::resource('product', 'ProductController');
-Route::resource('order', 'OrderController');
+Route::resource('sellOrder', 'OrderController');
+Route::resource('ItemOrder', 'ItemOrderController');

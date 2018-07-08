@@ -27,7 +27,11 @@ class ItemOrder
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="Product", inversedBy="sellOrders")
+     * @ORM\ManyToOne(targetEntity="Product", inversedBy="itemsOrder")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="product_id", referencedColumnName="id")
+     * })
+     *
      * @var Product
      */
     protected $itemOrder;
@@ -42,12 +46,13 @@ class ItemOrder
      */
     protected $total;
 
-    public function __construct($id, $priceUnity, $quantity, $total)
+    public function __construct($id, $quantity, $priceUnity, $total)
     {
         $this->id         = $id;
         $this->priceUnity = $priceUnity;
         $this->quantity   = $quantity;
         $this->total      = $total;
+
         $this->itemOrder   = new ArrayCollection;
     }
 
@@ -59,6 +64,16 @@ class ItemOrder
     public function setId($id)
     {
         $this->id = $id;
+    }
+
+    public function getPriceUnity()
+    {
+        return $this->priceUnity;
+    }
+
+    public function setPriceUnity($priceUnity)
+    {
+        $this->priceUnity = $priceUnity;
     }
 
     public function setCustomer(People $customer)
@@ -96,7 +111,7 @@ class ItemOrder
         return $this->itemOrder;
     }
 
-    public function setItemOrder($itemOrder)
+    public function setItemOrder(Product $itemOrder)
     {
         $this->itemOrder = $itemOrder;
     }
