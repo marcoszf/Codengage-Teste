@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Entities\Product;
 use \Doctrine\ORM\EntityManagerInterface;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
@@ -21,7 +22,26 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
-        $product = new Product(6, $request->code, $request->name, $request->price);
+        $rules = [
+            "name" => "required|unique:App\Entities\Product,name",
+            "code" => "required|unique:App\Entities\Product,code",
+            "price" => "min:1|numeric",
+
+        ];
+        $messages = [
+            "name.unique" => "Nome já cadastrado, favor inserir outro.",
+            "code.unique" => "Código já cadastrado, favor inserir outro.",
+            "price.min" => "O preço deve ter um valor maior que 0.",
+            "price.numeric" => "Favor insira um número para o preço"
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if ($validator->fails()) {
+            return redirect('product')->withErrors($validator);
+        }
+
+        $product = new Product(1, $request->code, $request->name, $request->price);
 
         \EntityManager::persist($product);
         \EntityManager::flush();

@@ -22,6 +22,8 @@
                     <input type="text" class="form-control" name="birthday" required>
                 </div><br>
 
+                <p style="color:darkred"> {{$errors->first() }} </p>
+
                 <div class="col-12">
                     <input type="submit" value="Enviar" class="btn btn-default">
                 </div>

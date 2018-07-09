@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Entities\People;
 use \Doctrine\ORM\EntityManagerInterface;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Validator;
+
 class PeopleController extends Controller
 {
 
@@ -20,6 +22,19 @@ class PeopleController extends Controller
 
     public function store(Request $request)
     {
+        $rules = [
+            "name" => "required|unique:App\Entities\Product,name",
+        ];
+        $messages = [
+            "name.unique" => "Nome já cadastrado, favor inserir outro.",
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if ($validator->fails()) {
+            return redirect('people')->withErrors($validator);
+        }
+
         $task = new People(1, $request->name, Carbon::createFromDate('1987', '08', '19' ));
 
         \EntityManager::persist($task);
