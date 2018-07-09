@@ -2,6 +2,8 @@
 
 @section('content')
 
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium architecto ipsa natus nihil porro quae sed totam voluptate! Aperiam esse, et iste magni molestiae neque nesciunt perspiciatis quia reiciendis sit.
+ <h4> Um simples sistema com telas de CRUDs para fins de teste </h4>
+ <p> <b>desenvolvido por:</b> Marcos Colombelli, Skype: marcosproweb.</p>
+ <p> <b>Utilizado:</b> Framework Laravel 5.5, ORM Doctrine e Bootstrap 4.</p>
 
 @endsection

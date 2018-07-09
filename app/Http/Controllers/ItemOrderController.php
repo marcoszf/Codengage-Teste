@@ -43,14 +43,30 @@ class ItemOrderController extends Controller
 
     }
 
-    public function edit($id)
+    public function edit($id, EntityManagerInterface $em)
     {
+        $products   = $em->getRepository(Product::class)->findAll();
+        $itemOrder  = $em->getRepository(ItemOrder::class)->find($id);
 
+        return view('app.order.edit-item-order', [
+            'products'   => $products,
+            'itemOrder'  => $itemOrder
+        ]);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $id, EntityManagerInterface $em)
     {
+        $product = $em->getRepository(Product::class)->find($request->product_id);
 
+        $itemOrder = $em->getRepository(ItemOrder::class)->find($id);
+        $itemOrder->setQuantity($request->quantity);
+        $itemOrder->setPriceUnity($request->priceUnity);
+        $itemOrder->setTotal($request->total);
+        $itemOrder->setItemOrder($product);
+
+        $em->flush();
+
+        return redirect('ItemOrder')->with('success_message', 'Registro atualizado com sucesso.');
     }
 
     public function destroy(EntityManagerInterface $em, $id)

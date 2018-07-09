@@ -25,7 +25,6 @@ class ItemOrder
      */
     protected $priceUnity;
 
-
     /**
      * @ORM\ManyToOne(targetEntity="Product", inversedBy="itemsOrder")
      * @ORM\JoinColumns({
@@ -35,6 +34,16 @@ class ItemOrder
      * @var Product
      */
     protected $itemOrder;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="SellOrder", inversedBy="itemOrder")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="sell_order_id", referencedColumnName="id")
+     * })
+     *
+     * @var SellOrder
+     */
+    protected $itemsOrder;
 
     /**
      * @ORM\Column(type="decimal", precision=2, options={"unsigned":true})

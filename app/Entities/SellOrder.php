@@ -26,7 +26,6 @@ class SellOrder
      */
     protected $emission;
 
-
     /**
      * @ORM\ManyToOne(targetEntity="People", inversedBy="sellOrders")
      * @var People
@@ -34,16 +33,24 @@ class SellOrder
     protected $customer;
 
     /**
+     * @ORM\OneToMany(targetEntity="ItemOrder", mappedBy="itemsOrder", cascade={"persist"})
+     * @var ArrayCollection|ItemOrder[]
+     */
+    protected $itemOrder;
+
+    /**
      * @ORM\Column(type="decimal", precision=2, options={"unsigned":true})
      */
     protected $total;
 
-    public function __construct($id, $name, $emission, $total)
+    public function __construct($id, $emission, $total)
     {
         $this->id        = $id;
         $this->emission  = $emission;
         $this->total     = $total;
+
         $this->customer  = new ArrayCollection;
+        $this->itemOrder = new ArrayCollection;
     }
 
     public function getId()
@@ -74,6 +81,16 @@ class SellOrder
     public function getCustomer()
     {
         return $this->customer;
+    }
+
+    public function setItemOrder(People $itemOrder)
+    {
+        $this->itemOrder = $itemOrder;
+    }
+
+    public function getItemOrder()
+    {
+        return $this->itemOrder;
     }
 
     public function getTotal()

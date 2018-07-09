@@ -31,6 +31,7 @@
     <div class="conteiner">
         <div class="center">
             <ul class="nav">
+                <li class="nav-item"><a class="nav-link active" href="{{ url('/')  }}">Home</a></li>
                 <li class="nav-item"><a class="nav-link active" href="{{ url('people')  }}">Pessoas</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ url('product')  }}">Produtos</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ url('sellOrder')  }}">Pedidos</a></li>
